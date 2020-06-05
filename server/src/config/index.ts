@@ -5,4 +5,5 @@ export default () => ({
   isDevelopment: process.env.NODE_ENV = 'development',
   isStaging: process.env.NODE_ENV = 'staging',
   isProduction: process.env.NODE_ENV = 'production',
+  mongodbTestURI: process.env.MONGODB_TEST_URI,
 });
