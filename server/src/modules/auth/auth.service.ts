@@ -11,15 +11,11 @@ import { Auth } from './schema/auth.schema';
 @Injectable()
 export class AuthService {
   constructor(
-    @InjectModel(Auth.name) private readonly authModel: Model<Auth>,
-    private readonly configService: ConfigService,
+    @InjectModel(Auth.name) private authModel: Model<Auth>,
+    private configService: ConfigService,
   ) {}
 
-  private reponseHandler(
-    message: string,
-    success: boolean,
-    user = null,
-  ): LoginSignupResponseDto {
+  private reponseHandler(message: string, success: boolean, user = null): LoginSignupResponseDto {
     return {
       message,
       success,
@@ -41,7 +37,6 @@ export class AuthService {
     try {
       const user = new this.authModel(signupDto);
       await user.save();
-
       const data = {
         login: user.login,
         token: this.generateToken(user.login, user.id),
@@ -53,7 +48,7 @@ export class AuthService {
     }
   }
 
-  async handleLogin({ login, password}: LoginSignupDto) {
+  async handleLogin({ login, password }: LoginSignupDto) {
     try {
       const user = await this.authModel.findOne({ login });
       if (!user || !this.verifyPassword(password, user.password)) {
@@ -65,7 +60,7 @@ export class AuthService {
         token: this.generateToken(user.login, user.id),
       };
 
-      return this.reponseHandler('Login Succeeded', true, data);
+      return this.reponseHandler('Login Succeeded.', true, data);
     } catch (error) {
       return this.reponseHandler(`Login Failed: ${error.message}`, false);
     }
