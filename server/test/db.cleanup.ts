@@ -12,7 +12,7 @@ export class DatabaseCleanUpService {
     await this.connection.models[Auth.name].remove({});
   }
 
-  async dropDatabase() {
+  async closeConnection() {
     this.connection.dropDatabase();
   }
 }
